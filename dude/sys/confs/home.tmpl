@@ -1,5 +1,6 @@
 (use-modules (gnu)
              (gnu services ssh)
+             (gnu services samba)
              (nongnu packages linux)
              (nongnu system linux-initrd)
 	     (dude srvcs workstation)
@@ -23,7 +24,7 @@
                          (mount-point "/")
                          (type "ext4"))
                        (file-system
-                         (device (uuid "0C5B-5337" 'fat))
+                         (device (uuid "0426-295C" 'fat))
                          (mount-point "/boot/efi")
                          (type "vfat")))
                  %base-file-systems))
@@ -39,9 +40,12 @@
 	     %dude-workstation-packages
 	     (map (compose list specification->package+output)
 		  '("emacs-stuff"))))
-  (services (append
-             %dude-workstation-services
-             (list (service openssh-service-type))))
+  (services (cons*
+             (service samba-service-type (samba-configuration
+                                          (enable-smbd? #t)
+                                          (config-file (local-file "services/smb.conf"))))
+             (service openssh-service-type)
+             %dude-workstation-services))
 
   ;; Allow resolution of '.local' host names with mDNS.
   (name-service-switch %mdns-host-lookup-nss))

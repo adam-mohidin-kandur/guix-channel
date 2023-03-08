@@ -30,7 +30,7 @@
   (append
    %dude-base-services
    (list
-    (service slim-service-type)
+    (service gdm-service-type)
     (screen-locker-service xlockmore "xlock")
     (simple-service 'mtp udev-service-type (list libmtp))
     (service sane-service-type)

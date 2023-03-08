@@ -7,7 +7,7 @@
 
 (define-public emacs-stuff
   (let ((revision "4")
-        (commit "2efd9c7dbd685740007fa9fda8fee09ec60550fe"))
+        (commit "9b1eed2ac2b5c2f645877d7e1ec5dae0c8b7ecf2"))
     (package
       (name "emacs-stuff")
       (version (git-version "0.1" revision commit))
@@ -15,11 +15,11 @@
        (origin
 	 (method git-fetch)
 	 (uri (git-reference
-	       (url "https://github.com/lebowski-the-dude/stuff.git")
+	       (url "https://github.com/adam-kandur/stuff")
 	       (commit commit)))
 	 (file-name (git-file-name name version))
 	 (sha256
-	  (base32 "1mayy270dkqsimmm7b5p85jbj9p53xyr42g19iz7ilym3gyigfqn"))))
+	  (base32 "08ap9024zwsznjjmczjkhksrrljzknz3csx9c9kxd2g9pb8sbvkn"))))
       (build-system emacs-build-system)
       (propagated-inputs
        (list emacs-async))
