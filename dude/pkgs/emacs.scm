@@ -3,7 +3,8 @@
   #:use-module (guix packages)
   #:use-module (guix git-download)
   #:use-module (guix build-system emacs)
-  #:use-module (gnu packages emacs-xyz))
+  #:use-module (gnu packages emacs-xyz)
+  #:use-module (dude pkgs bash))
 
 (define-public emacs-stuff
   (let ((revision "4")
@@ -22,7 +23,8 @@
 	  (base32 "08ap9024zwsznjjmczjkhksrrljzknz3csx9c9kxd2g9pb8sbvkn"))))
       (build-system emacs-build-system)
       (propagated-inputs
-       (list emacs-async))
+       (list emacs-async
+             monitor-checker))
       (arguments
        `(#:include '("\\.el$")))
       (home-page "https://github.com/KefirTheAutomator/stuff")
