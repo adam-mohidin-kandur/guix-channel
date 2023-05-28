@@ -3,27 +3,27 @@
   #:use-module (guix download)
   #:use-module (guix packages)
   #:use-module (guix utils)
+  #:use-module (guix gexp)
   #:use-module (guix git-download)
-  #:use-module (gnu packages linux))
+  #:use-module (gnu packages linux)
+  #:use-module (srfi srfi-1)
+  #:use-module (nongnu packages linux))
 
 (define* (corrupt-linux-git kernel-package version hash url #:key (name "dude-linux-git"))
   (package
-    (inherit kernel-package)
-    (name name)
-    (version version)
-    (source (origin
-              (method git-fetch)
-	      (uri (git-reference
-	            (url url)
-	            (commit version)))
-	      (file-name (git-file-name name version))
-	      (sha256
-	       (base32 hash))))
-    (home-page "https://www.kernel.org/")
-    (synopsis "Linux kernel with nonfree binary blobs included")
-    (description
-     "The unmodified Linux kernel, including nonfree blobs, for running Guix
-System on hardware which requires nonfree software to function.")))
+    (inherit
+     (customize-linux
+      #:name name
+      #:source (origin
+                 (method git-fetch)
+                 (uri (git-reference
+	               (url url)
+	               (commit version)))
+                 (file-name (git-file-name name version))
+	         (sha256
+	          (base32 hash)))
+      #:defconfig (local-file "linux.cfg")))
+    (version version)))
 
 (define-public dude-linux-git
   (corrupt-linux-git linux-libre-6.1 "v6.1-rc1"

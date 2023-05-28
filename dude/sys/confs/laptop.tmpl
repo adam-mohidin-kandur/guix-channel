@@ -2,10 +2,11 @@
              (gnu services desktop)
 	     (nongnu packages linux)
              (nongnu system linux-initrd)
-             (dude srvcs workstation))
+             (dude srvcs workstation)
+             (dude pkgs linux))
 
 (operating-system
- (kernel linux)
+ (kernel dude-linux-git)
  (initrd microcode-initrd)
  (firmware (list linux-firmware))
  (host-name "grimoire")
@@ -22,7 +23,7 @@
                        (mount-point "/")
                        (type "ext4"))
                       (file-system
-                       (device (uuid "E26A-6302" 'fat))
+                       (device (uuid "797E-ABE4" 'fat))
                        (mount-point "/boot/efi")
                        (type "vfat")))
                 %base-file-systems))
