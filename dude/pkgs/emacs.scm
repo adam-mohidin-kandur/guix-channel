@@ -7,8 +7,8 @@
   #:use-module (dude pkgs bash))
 
 (define-public emacs-stuff
-  (let ((revision "4")
-        (commit "9b1eed2ac2b5c2f645877d7e1ec5dae0c8b7ecf2"))
+  (let ((revision "6")
+        (commit "4b948cbabb5a4ebb042eacef6e69673d5f2f1949"))
     (package
       (name "emacs-stuff")
       (version (git-version "0.1" revision commit))
@@ -20,14 +20,26 @@
 	       (commit commit)))
 	 (file-name (git-file-name name version))
 	 (sha256
-	  (base32 "08ap9024zwsznjjmczjkhksrrljzknz3csx9c9kxd2g9pb8sbvkn"))))
+	  (base32 "03v4576y7ms96cppdlfphyf0x98sk4nkph3mfp1ifh662z1zqii3"))))
       (build-system emacs-build-system)
-      (propagated-inputs
-       (list emacs-async
-             monitor-checker))
       (arguments
-       `(#:include '("\\.el$")))
-      (home-page "https://github.com/KefirTheAutomator/stuff")
+       '(#:include '("\\.el$")
+         #:phases
+         (modify-phases %standard-phases
+           (add-after 'unpack 'patch-paths-to-commands
+             (lambda* (#:key inputs #:allow-other-keys)
+               (substitute* "stuff/tools.org"
+                 (("MonitorChecker.sh")
+                  (search-input-file inputs "/bin/MonitorChecker.sh")))))
+           (add-after 'patch-paths-to-commands 'load-org-files
+             (lambda _
+               (invoke
+                "emacs" "-Q" "--batch" "--load" "script.el"))))))
+      (inputs
+       (list monitor-checker))
+      (propagated-inputs
+       (list emacs-async))
+      (home-page "https://github.com/adam-kandur/stuff")
       (synopsis "my emacs package")
       (description "my emacs package")
       (license license:gpl3+))))

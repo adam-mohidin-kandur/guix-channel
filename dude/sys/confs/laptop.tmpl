@@ -2,11 +2,10 @@
              (gnu services desktop)
 	     (nongnu packages linux)
              (nongnu system linux-initrd)
-             (dude srvcs workstation)
-             (dude pkgs linux))
+             (dude srvcs workstation))
 
 (operating-system
- (kernel dude-linux-git)
+ (kernel linux)
  (initrd microcode-initrd)
  (firmware (list linux-firmware))
  (host-name "grimoire")
@@ -23,7 +22,7 @@
                        (mount-point "/")
                        (type "ext4"))
                       (file-system
-                       (device (uuid "797E-ABE4" 'fat))
+                       (device (uuid "6EE8-5179" 'fat))
                        (mount-point "/boot/efi")
                        (type "vfat")))
                 %base-file-systems))
@@ -39,11 +38,14 @@
  (packages (append
 	    %dude-workstation-packages
 	    (map (compose list specification->package+output)
-		 '("emacs-stuff"))))
+		 '("emacs-stuff"
+                   "emacs-magit"
+                   "adwaita-icon-theme"
+                   "font-google-noto"))))
 
  (services (append
             %dude-workstation-services
             (list
-             (service xfce-desktop-service-type))))
+             (service bluetooth-service-type))))
 
  (name-service-switch %mdns-host-lookup-nss))
