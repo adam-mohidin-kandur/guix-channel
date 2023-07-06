@@ -1,5 +1,6 @@
 (use-modules (gnu) (gnu system nss)
              (gnu services desktop)
+             (gnu services docker)
 	     (nongnu packages linux)
              (nongnu system linux-initrd)
              (dude srvcs workstation))
@@ -32,7 +33,8 @@
                (comment "-_-")
                (group "users")
                (supplementary-groups '("wheel" "netdev"
-                                       "audio" "video")))
+                                       "audio" "video"
+                                       "docker")))
               %base-user-accounts))
 
  (packages (append
@@ -40,12 +42,14 @@
 	    (map (compose list specification->package+output)
 		 '("emacs-stuff"
                    "emacs-magit"
+                   "emacs-vterm"
                    "adwaita-icon-theme"
                    "font-google-noto"))))
 
  (services (append
             %dude-workstation-services
             (list
-             (service bluetooth-service-type))))
+             (service bluetooth-service-type)
+             (service docker-service-type))))
 
  (name-service-switch %mdns-host-lookup-nss))

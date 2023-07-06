@@ -19,6 +19,8 @@
                                             "pulsemixer"
                                             "cryptsetup"
                                             "ungoogled-chromium"
+                                            "font-google-noto"
+                                            "adwaita-icon-theme"
                                             "vlc")))
 
   ;; Below is the list of Home services.  To search for available

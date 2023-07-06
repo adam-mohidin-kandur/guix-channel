@@ -41,9 +41,10 @@
 	     (map (compose list specification->package+output)
 		  '("emacs-stuff"))))
   (services (cons*
-             (service samba-service-type (samba-configuration
-                                          (enable-smbd? #t)
-                                          (config-file (local-file "services/smb.conf"))))
+             (service samba-service-type
+                      (samba-configuration
+                       (enable-smbd? #t)
+                       (config-file (local-file "services/smb.conf"))))
              (service openssh-service-type)
              %dude-workstation-services))
 
