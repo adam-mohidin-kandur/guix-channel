@@ -8,7 +8,7 @@
 
 (define-public emacs-stuff
   (let ((revision "6")
-        (commit "4b948cbabb5a4ebb042eacef6e69673d5f2f1949"))
+        (commit "ff5241bbb88be115dcac327fa5f206e68fc7f509"))
     (package
       (name "emacs-stuff")
       (version (git-version "0.1" revision commit))
@@ -20,7 +20,7 @@
 	       (commit commit)))
 	 (file-name (git-file-name name version))
 	 (sha256
-	  (base32 "03v4576y7ms96cppdlfphyf0x98sk4nkph3mfp1ifh662z1zqii3"))))
+	  (base32 "1ffp5sf6c1kkvysqz4pm4zrs2n46iy81l2zq63x4yhy3s2n3fg92"))))
       (build-system emacs-build-system)
       (arguments
        '(#:include '("\\.el$")
