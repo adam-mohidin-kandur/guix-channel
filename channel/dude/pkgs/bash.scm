@@ -9,7 +9,7 @@
 
 (define-public monitor-checker
   (let ((revision "0")
-        (commit "c7b480206e7e30648fd56f0571c8e66335391be7"))
+        (commit "c6baf8bea4a039876547295a1b52954daebc1e50"))
     (package
       (name "monitor-checker")
       (version (git-version "0.0.0" revision commit))
@@ -21,7 +21,7 @@
 	       (commit commit)))
 	 (file-name (git-file-name name version))
 	 (sha256
-	  (base32 "1l1q98bwb28wx4p45wby7dns8lg2bbynwx9rqm2cr8rj62nd0pm1"))))
+	  (base32 "19fw660nx8vpr408h5fhs8abw5587f0w8x28x42k85mhxirw4wzi"))))
       (build-system trivial-build-system)
       (propagated-inputs
        (list xrandr
