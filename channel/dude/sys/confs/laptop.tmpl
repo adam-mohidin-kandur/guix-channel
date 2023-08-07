@@ -1,4 +1,5 @@
 (use-modules (gnu) (gnu system nss)
+             (gnu artwork)
              (gnu services desktop)
              (gnu services docker)
 	     (nongnu packages linux)
@@ -6,50 +7,58 @@
              (dude srvcs workstation))
 
 (operating-system
- (kernel linux)
- (initrd microcode-initrd)
- (firmware (list linux-firmware))
- (host-name "grimoire")
- (timezone "Europe/Moscow")
- (locale "en_US.utf8")
+  (kernel linux)
+  (initrd microcode-initrd)
+  (firmware (list linux-firmware))
+  (host-name "grimoire")
+  (timezone "Europe/Moscow")
+  (locale "en_US.utf8")
 
- (bootloader (bootloader-configuration
-              (bootloader grub-efi-bootloader)
-              (targets '("/boot/efi"))))
+  (bootloader (bootloader-configuration
+               (theme (grub-theme
+                       (inherit (grub-theme))
+                       (image #f)))
+                       ;; (image (local-file "/home/user/Downloads/haha.svg"))))
+                       ;; (image (file-append %artwork-repository
+                       ;;                     "/grub/GuixSD-4-3.svg"))))
+               (bootloader grub-efi-bootloader)
+               (targets '("/boot/efi"))))
 
- (file-systems (append
-                (list (file-system
-                       (device (file-system-label "my-root"))
-                       (mount-point "/")
-                       (type "ext4"))
-                      (file-system
-                       (device (uuid "6EE8-5179" 'fat))
-                       (mount-point "/boot/efi")
-                       (type "vfat")))
-                %base-file-systems))
+  (file-systems (append
+                 (list (file-system
+                         (device (file-system-label "my-root"))
+                         (mount-point "/")
+                         (type "ext4"))
+                       (file-system
+                         (device (uuid "5EE9-E57D" 'fat))
+                         (mount-point "/boot/efi")
+                         (type "vfat")))
+                 %base-file-systems))
 
- (users (cons (user-account
-               (name "user")
-               (comment "-_-")
-               (group "users")
-               (supplementary-groups '("wheel" "netdev"
-                                       "audio" "video"
-                                       "docker")))
-              %base-user-accounts))
+  (users (cons (user-account
+                (name "user")
+                (comment "-_-")
+                (group "users")
+                (supplementary-groups '("wheel" "netdev"
+                                        "audio" "video"
+                                        "docker")))
+               %base-user-accounts))
 
- (packages (append
-	    %dude-workstation-packages
-	    (map (compose list specification->package+output)
-		 '("emacs-stuff"
-                   "emacs-magit"
-                   "emacs-vterm"
-                   "adwaita-icon-theme"
-                   "font-google-noto"))))
+  (packages (append
+	     %dude-workstation-packages
+	     (map (compose list specification->package+output)
+		  '("emacs-stuff"
+                    "emacs-magit"
+                    "emacs-vterm"
+                    "emacs-pdf-tools"
+                    "adwaita-icon-theme"
+                    "font-google-noto"
+                    "texlive"))))
 
- (services (append
-            %dude-workstation-services
-            (list
-             (service bluetooth-service-type)
-             (service docker-service-type))))
+  (services (append
+             %dude-workstation-services
+             (list
+              (service bluetooth-service-type)
+              (service docker-service-type))))
 
- (name-service-switch %mdns-host-lookup-nss))
+  (name-service-switch %mdns-host-lookup-nss))

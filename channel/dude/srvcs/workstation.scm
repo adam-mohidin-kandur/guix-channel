@@ -30,11 +30,7 @@
 
 (define %dude-workstation-services
   (cons* (service slim-service-type (slim-configuration
-                                     (display ":0")
-                                     (vt "vt7")))
-         (service slim-service-type (slim-configuration
-                                     (display ":1")
-                                     (vt "vt8")))
+                                     (theme #f)))
          (modify-services %desktop-services
            (delete gdm-service-type)
            (guix-service-type
