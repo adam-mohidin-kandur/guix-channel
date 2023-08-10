@@ -2,6 +2,7 @@
              (gnu artwork)
              (gnu services desktop)
              (gnu services docker)
+             (gnu services ssh)
 	     (nongnu packages linux)
              (nongnu system linux-initrd)
              (dude srvcs workstation))
@@ -18,9 +19,6 @@
                (theme (grub-theme
                        (inherit (grub-theme))
                        (image #f)))
-                       ;; (image (local-file "/home/user/Downloads/haha.svg"))))
-                       ;; (image (file-append %artwork-repository
-                       ;;                     "/grub/GuixSD-4-3.svg"))))
                (bootloader grub-efi-bootloader)
                (targets '("/boot/efi"))))
 
@@ -59,6 +57,9 @@
              %dude-workstation-services
              (list
               (service bluetooth-service-type)
-              (service docker-service-type))))
+              (service docker-service-type)
+              (service openssh-service-type
+                       (openssh-configuration
+                        (%auto-start? #f))))))
 
   (name-service-switch %mdns-host-lookup-nss))
