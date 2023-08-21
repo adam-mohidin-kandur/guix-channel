@@ -1,7 +1,7 @@
 (define-module (dude pkgs latex)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
-  #:use-module ((gnu packages tex) #:select (texlive))
+  #:use-module (gnu packages tex)
   #:use-module (guix git-download)
   #:use-module (guix build-system gnu))
 
