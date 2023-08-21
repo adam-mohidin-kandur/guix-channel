@@ -34,8 +34,8 @@
                                (doc (string-append out "/doc")))
                           (install-file "skanavi.pdf" doc))))
                     )))
-      (native-inputs
-       (list texlive))
+      ;; (native-inputs
+      ;;  (list texlive))
       (home-page "https://github.com/adam-kandur/utils")
       (synopsis "my emacs package")
       (description "my emacs package")
