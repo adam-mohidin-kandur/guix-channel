@@ -1,6 +1,8 @@
 (use-modules (gnu) (gnu system nss)
              (gnu artwork)
+             (gnu packages databases)
              (gnu services desktop)
+             (gnu services databases)
              (gnu services docker)
              (gnu services ssh)
 	     (nongnu packages linux)
@@ -10,7 +12,7 @@
 (operating-system
   (kernel linux)
   (initrd microcode-initrd)
-  (firmware (list linux-firmware))
+  (firmware (list linux-firmware sof-firmware))
   (host-name "grimoire")
   (timezone "Europe/Moscow")
   (locale "en_US.utf8")
@@ -28,7 +30,7 @@
                          (mount-point "/")
                          (type "ext4"))
                        (file-system
-                         (device (uuid "5EE9-E57D" 'fat))
+                         (device (uuid "BF91-D2C7" 'fat))
                          (mount-point "/boot/efi")
                          (type "vfat")))
                  %base-file-systems))
@@ -38,8 +40,7 @@
                 (comment "-_-")
                 (group "users")
                 (supplementary-groups '("wheel" "netdev"
-                                        "audio" "video"
-                                        "docker")))
+                                        "audio" "video" "postgres")))
                %base-user-accounts))
 
   (packages (append
@@ -51,13 +52,20 @@
                     "emacs-pdf-tools"
                     "adwaita-icon-theme"
                     "font-google-noto"
-                    "texlive"))))
+                    "texlive"
+                    "ibus" "ibus-libpinyin" "dconf"))))
 
   (services (append
              %dude-workstation-services
              (list
+              (service xfce-desktop-service-type)
               (service bluetooth-service-type)
-              (service docker-service-type)
+              ;; (service docker-service-type
+              ;;          (docker-configuration
+              ;;           (%auto-start? #f)))
+              (service postgresql-service-type
+                       (postgresql-configuration
+                        (postgresql postgresql-10)))
               (service openssh-service-type
                        (openssh-configuration
                         (%auto-start? #f))))))
