@@ -1,4 +1,4 @@
-(define-module (dude pkgs python)
+(define-module (adammk pkgs python)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix download)

@@ -1,4 +1,4 @@
-(define-module (dude pkgs latex)
+(define-module (adammk pkgs latex)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (gnu packages tex)

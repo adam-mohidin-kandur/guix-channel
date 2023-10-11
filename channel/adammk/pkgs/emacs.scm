@@ -1,10 +1,10 @@
-(define-module (dude pkgs emacs)
+(define-module (adammk pkgs emacs)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix git-download)
   #:use-module (guix build-system emacs)
   #:use-module (gnu packages emacs-xyz)
-  #:use-module (dude pkgs bash))
+  #:use-module (adammk pkgs bash))
 
 (define-public emacs-stuff
   (let ((revision "6")

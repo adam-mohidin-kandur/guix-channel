@@ -1,13 +1,11 @@
 (use-modules (gnu) (gnu system nss)
-             (gnu artwork)
-             (gnu packages databases)
+             (gnu packages gnome)
              (gnu services desktop)
-             (gnu services databases)
              (gnu services docker)
              (gnu services ssh)
 	     (nongnu packages linux)
              (nongnu system linux-initrd)
-             (dude srvcs workstation))
+             ((adammk srvcs) #:prefix adammk-srvcs:))
 
 (operating-system
   (kernel linux)
@@ -30,7 +28,7 @@
                          (mount-point "/")
                          (type "ext4"))
                        (file-system
-                         (device (uuid "BF91-D2C7" 'fat))
+                         (device (uuid "5C43-2FCB" 'fat))
                          (mount-point "/boot/efi")
                          (type "vfat")))
                  %base-file-systems))
@@ -40,34 +38,26 @@
                 (comment "-_-")
                 (group "users")
                 (supplementary-groups '("wheel" "netdev"
-                                        "audio" "video" "postgres")))
+                                        "audio" "video")))
                %base-user-accounts))
 
   (packages (append
-	     %dude-workstation-packages
+	     %base-packages
 	     (map (compose list specification->package+output)
-		  '("emacs-stuff"
+		  '("emacs" "emacs-exwm" "emacs-desktop-environment"
+                    "nss-certs"
+                    "emacs-stuff"
                     "emacs-magit"
                     "emacs-vterm"
                     "emacs-pdf-tools"
                     "adwaita-icon-theme"
                     "font-google-noto"
-                    "texlive"
-                    "ibus" "ibus-libpinyin" "dconf"))))
+                    "texlive"))))
 
-  (services (append
-             %dude-workstation-services
-             (list
-              (service xfce-desktop-service-type)
-              (service bluetooth-service-type)
-              ;; (service docker-service-type
-              ;;          (docker-configuration
-              ;;           (%auto-start? #f)))
-              (service postgresql-service-type
-                       (postgresql-configuration
-                        (postgresql postgresql-10)))
-              (service openssh-service-type
-                       (openssh-configuration
-                        (%auto-start? #f))))))
+  (services (append adammk-srvcs:%desktop-services
+                    (list
+                     (service gnome-desktop-service-type)
+                     (service bluetooth-service-type)
+                     (service docker-service-type))))
 
   (name-service-switch %mdns-host-lookup-nss))

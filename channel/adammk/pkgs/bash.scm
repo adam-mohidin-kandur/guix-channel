@@ -1,4 +1,4 @@
-(define-module (dude pkgs bash)
+(define-module (adammk pkgs bash)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (gnu packages xorg)
@@ -23,7 +23,7 @@
        (origin
          (method git-fetch)
          (uri (git-reference
-               (url "file:///home/user/Git/utils")
+               (url "https://github.com/adam-mohidin-kandur/utils.git")
                (commit commit)))
          (file-name (git-file-name name version))
          (sha256
