@@ -6,7 +6,7 @@
 
 (define-public backuper
   (let ((revision "0")
-        (commit "7e75274acb7775562586e4b81de52a8cbd9f8778"))
+        (commit "4bbc38f1ecb904cfaa6af448ae2b078c5e036f3f"))
     (package
       (name "backuper")
       (version (git-version "0.0.1" revision commit))
