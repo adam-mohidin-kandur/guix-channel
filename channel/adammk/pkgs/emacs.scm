@@ -8,7 +8,7 @@
 
 (define-public emacs-stuff
   (let ((revision "6")
-        (commit "ff5241bbb88be115dcac327fa5f206e68fc7f509"))
+        (commit "88886330ecd608587e18b69953b0388879033bc1"))
     (package
       (name "emacs-stuff")
       (version (git-version "0.1" revision commit))
@@ -16,14 +16,15 @@
        (origin
 	 (method git-fetch)
 	 (uri (git-reference
-	       (url "https://github.com/adam-kandur/stuff")
+	       (url "https://github.com/adam-mohidin-kandur/stuff")
 	       (commit commit)))
 	 (file-name (git-file-name name version))
 	 (sha256
-	  (base32 "1ffp5sf6c1kkvysqz4pm4zrs2n46iy81l2zq63x4yhy3s2n3fg92"))))
+	  (base32 "18akqjc85p9ds2y7jl7ivysqcj3m2shvck1hac4lr2ibn0njsyxx"))))
       (build-system emacs-build-system)
       (arguments
        '(#:include '("\\.el$")
+         #:exclude '("script\\.el$")
          #:phases
          (modify-phases %standard-phases
            (add-after 'unpack 'patch-paths-to-commands
