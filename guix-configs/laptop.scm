@@ -2,7 +2,6 @@
              (gnu packages gnome)
              (gnu services desktop)
              (gnu services docker)
-             (gnu services ssh)
 	     (nongnu packages linux)
              (nongnu system linux-initrd)
              ((adammk srvcs) #:prefix adammk-srvcs:))
