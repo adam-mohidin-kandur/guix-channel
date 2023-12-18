@@ -23,7 +23,7 @@
        (origin
          (method git-fetch)
          (uri (git-reference
-               (url "https://github.com/adam-mohidin-kandur/utils.git")
+               (url "https://github.com/adam-mohidin-kandur/utils")
                (commit commit)))
          (file-name (git-file-name name version))
          (sha256
@@ -48,7 +48,37 @@
              (("grep") (string-append (assoc-ref %build-inputs "grep") "/bin/grep")))
            ;; install phase
            (install-file "MonitorChecker.sh" (string-append %output "/bin")))))
-      (home-page "https://github.com/adam-kandur/utils")
+      (home-page "https://github.com/adam-mohidin-kandur/utils")
+      (synopsis "")
+      (description "")
+      (license license:gpl3+))))
+
+(define-public adammk-backuper
+  (let ((revision "0")
+        (commit "33598f1e10505f5716f96462190fee036f49c4b8"))
+    (package
+      (name "adammk-backuper")
+      (version (git-version "0.0.0" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/adam-mohidin-kandur/utils")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32 "1vzkjab8ybfnfpn1kx1abf6lkvh0i8d32c29hfsyzji9avf3d3jp"))))
+      (build-system trivial-build-system)
+      (arguments
+       `(#:modules ((guix build utils))
+         #:builder
+         (begin
+           (use-modules (guix build utils))
+           ;; copy source
+           (copy-recursively (assoc-ref %build-inputs "source") ".")
+           ;; install phase
+           (install-file "Backuper.sh" (string-append %output "/bin")))))
+      (home-page "https://github.com/adam-mohidin-kandur/utils")
       (synopsis "")
       (description "")
       (license license:gpl3+))))
@@ -64,7 +94,7 @@
        (origin
 	 (method git-fetch)
 	 (uri (git-reference
-	       (url "https://github.com/WoeUSB/WoeUSB.git")
+	       (url "https://github.com/WoeUSB/WoeUSB")
 	       (commit commit)))
 	 (file-name (git-file-name name version))
 	 (sha256
